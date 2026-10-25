@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
 <title>VoiceCraft — Text to Speech</title>
+
 <style>
 :root {
   --ink: #171717;
@@ -20,8 +21,7 @@ body {
   margin: 0;
   background: #fff;
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -29,12 +29,13 @@ button, textarea, select, input { font: inherit; }
 button { cursor: pointer; }
 
 header {
-  height: 68px;
-  padding: 0 22px;
+  min-height: 68px;
+  padding: 12px 22px;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .brand {
@@ -43,12 +44,13 @@ header {
   align-items: center;
   font-weight: 800;
   font-size: 19px;
-  letter-spacing: -0.7px;
+  letter-spacing: -.7px;
 }
 
 .logo {
   width: 34px;
   height: 34px;
+  flex-shrink: 0;
   background: var(--accent);
   color: white;
   border-radius: 10px;
@@ -58,7 +60,7 @@ header {
 }
 
 .tag {
-  font-size: 12px;
+  font-size: 11px;
   color: #555;
   background: var(--soft);
   border: 1px solid var(--line);
@@ -69,11 +71,14 @@ header {
 main {
   max-width: 760px;
   width: 100%;
-  padding: 46px 18px 60px;
+  padding: 42px 18px 55px;
   margin: auto;
 }
 
-.intro { text-align: center; margin-bottom: 32px; }
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
 .eyebrow {
   color: var(--accent);
@@ -95,14 +100,29 @@ h1 {
   font-size: 15px;
   line-height: 1.7;
   margin: 0 auto;
-  max-width: 440px;
+  max-width: 450px;
 }
 
 .panel {
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 22px;
+  margin-bottom: 18px;
   box-shadow: 0 8px 35px rgba(0,0,0,.035);
+  min-width: 0;
+}
+
+.panel h2 {
+  font-size: 19px;
+  letter-spacing: -.4px;
+  margin: 0 0 7px;
+}
+
+.description {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 20px;
 }
 
 .label-row {
@@ -126,7 +146,7 @@ label, .field-label {
 textarea {
   display: block;
   width: 100%;
-  min-height: 185px;
+  min-height: 170px;
   resize: vertical;
   padding: 15px;
   border: 1px solid var(--line);
@@ -165,9 +185,9 @@ textarea::placeholder { color: #aaa; }
 
 .settings {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 17px;
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .field { min-width: 0; }
@@ -197,7 +217,7 @@ select {
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  margin-top: 23px;
+  margin-top: 22px;
 }
 
 .slider-head span:last-child {
@@ -207,15 +227,52 @@ select {
 
 input[type="range"] {
   width: 100%;
-  margin: 15px 0 0;
+  margin: 14px 0 0;
   accent-color: var(--accent);
 }
 
+.effects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.effect-btn {
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fff;
+  padding: 12px;
+  min-width: 0;
+}
+
+.effect-btn strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.effect-btn span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.effect-btn.active {
+  background: #f5f4ff;
+  border-color: var(--accent);
+}
+
+.effect-btn.active strong { color: var(--accent); }
+
 .buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .btn {
@@ -223,10 +280,11 @@ input[type="range"] {
   background: white;
   border-radius: 11px;
   padding: 13px 10px;
-  min-height: 47px;
+  min-height: 46px;
   font-size: 13px;
   font-weight: 700;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .btn:disabled {
@@ -253,6 +311,7 @@ input[type="range"] {
   color: #666;
   font-size: 12px;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .dot {
@@ -266,22 +325,78 @@ input[type="range"] {
 
 .status.active .dot { background: #21a366; }
 
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 23px 0;
+}
+
+.sound-card {
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+  min-width: 0;
+}
+
+.sound-card:first-of-type { border-top: 0; }
+
+.sound-title {
+  font-size: 14px;
+  font-weight: 750;
+  margin-bottom: 6px;
+}
+
+.sound-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.audio-player {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 42px;
+  margin: 12px 0;
+}
+
+.file-input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.file-input::file-selector-button {
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  border-radius: 8px;
+  margin: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+.full-width { width: 100%; margin-top: 10px; }
+
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 22px 16px;
   color: #888;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.8;
   border-top: 1px solid var(--line);
 }
 
 @media (max-width: 480px) {
-  header { padding: 0 16px; }
-  main { padding: 35px 14px 42px; }
-  .panel { padding: 16px; }
+  header { padding: 12px 14px; }
+  .tag { font-size: 10px; }
+  main { padding: 32px 12px 40px; }
+  .panel { padding: 16px; border-radius: 14px; }
   .settings { grid-template-columns: 1fr; gap: 15px; }
   h1 { letter-spacing: -1.5px; }
-  textarea { min-height: 170px; }
+  textarea { min-height: 160px; }
 }
 </style>
 </head>
@@ -292,18 +407,20 @@ footer {
     <div class="logo">♫</div>
     <span>VoiceCraft</span>
   </div>
-  <span class="tag">Free text to speech</span>
+  <span class="tag">Free voice studio</span>
 </header>
 
 <main>
   <section class="intro">
     <div class="eyebrow">Your words, spoken</div>
     <h1>Turn text into speech.</h1>
-    <p>Type anything, choose a voice, and listen.
-       Simple, fast, and free to use.</p>
+    <p>Create voiceovers, experiment with funny voices, and play your favourite meme sounds.</p>
   </section>
 
   <section class="panel">
+    <h2>🎙️ Text to Speech</h2>
+    <p class="description">Type a script, choose a voice, and press Speak.</p>
+
     <div class="label-row">
       <label for="text">Your text</label>
       <span id="counter">0 / 5000</span>
@@ -313,12 +430,8 @@ footer {
       placeholder="Type something you want to hear..."></textarea>
 
     <div class="tools">
-      <button class="text-button" id="exampleBtn">
-        Try example
-      </button>
-      <button class="text-button" id="clearBtn">
-        Clear text
-      </button>
+      <button class="text-button" id="exampleBtn" type="button">Try example</button>
+      <button class="text-button" id="clearBtn" type="button">Clear text</button>
     </div>
 
     <div class="settings">
@@ -328,20 +441,22 @@ footer {
           <option value="">Loading voices...</option>
         </select>
         <div class="hint" id="voiceHint">
-          Available voices depend on your device.
+          Matthew is selected automatically if your browser provides it.
         </div>
       </div>
 
       <div class="field">
-        <label for="style">Voice style</label>
-        <select id="style">
-          <option value="natural">Natural</option>
-          <option value="deep">Deeper male style</option>
-          <option value="bright">Brighter style</option>
+        <label for="effect">Voice effect</label>
+        <select id="effect">
+          <option value="normal">🎙️ Normal</option>
+          <option value="scream">😱 Screaming style</option>
+          <option value="whisper">🤫 Whisper style</option>
+          <option value="robot">🤖 Robot</option>
+          <option value="deep">👹 Deep voice</option>
+          <option value="fast">⚡ Fast</option>
+          <option value="slow">🐢 Slow</option>
         </select>
-        <div class="hint">
-          Pitch adjustments are approximate.
-        </div>
+        <div class="hint">These effects adjust the browser's speech controls; they are not studio voice filters.</div>
       </div>
     </div>
 
@@ -349,144 +464,195 @@ footer {
       <label for="speed">Speaking speed</label>
       <span id="speedValue">1.0×</span>
     </div>
-    <input id="speed" type="range"
-      min="0.6" max="1.4" step="0.1" value="1">
+    <input id="speed" type="range" min="0.5" max="2"
+      step="0.1" value="1">
+
+    <div class="slider-head">
+      <label for="pitch">Pitch</label>
+      <span id="pitchValue">1.0</span>
+    </div>
+    <input id="pitch" type="range" min="0.5" max="2"
+      step="0.1" value="1">
 
     <div class="buttons">
-      <button class="btn btn-primary" id="speakBtn">
-        ▶ Speak text
-      </button>
-      <button class="btn" id="pauseBtn" disabled>
-        Ⅱ Pause
-      </button>
-      <button class="btn" id="resumeBtn" disabled>
-        ▶ Resume
-      </button>
-      <button class="btn" id="stopBtn">
-        ■ Stop
-      </button>
+      <button class="btn btn-primary" id="speakBtn" type="button">▶ Speak text</button>
+      <button class="btn" id="pauseBtn" type="button" disabled>Ⅱ Pause</button>
+      <button class="btn" id="resumeBtn" type="button" disabled>▶ Resume</button>
+      <button class="btn" id="stopBtn" type="button">■ Stop</button>
     </div>
 
-    <div class="status" id="status" role="status"
-      aria-live="polite">
+    <div class="status" id="status" role="status" aria-live="polite">
       <span class="dot"></span>
-      <span id="statusText">
-        Ready. Enter some text to get started.
-      </span>
+      <span id="statusText">Ready. Enter some text to get started.</span>
+    </div>
+
+    <button class="btn full-width" id="newsBtn" type="button">
+      🌪️ Try Weather Man Newsreader
+    </button>
+  </section>
+
+  <section class="panel">
+    <h2>🎧 Meme Soundboard</h2>
+    <p class="description">
+      Upload audio files from your device to play your own sound effects.
+      Audio files are not bundled with this website.
+    </p>
+
+    <div class="sound-card">
+      <div class="sound-title">🟩 Minecraft Villager</div>
+      <p>Load a Villager sound effect from an audio file on your device.</p>
+      <input class="file-input" id="villagerFile" type="file"
+        accept="audio/*">
+      <audio class="audio-player" id="villagerAudio" controls preload="none"></audio>
+      <button class="btn full-width" id="villagerStop" type="button">■ Stop Villager audio</button>
+    </div>
+
+    <div class="sound-card">
+      <div class="sound-title">🌪️ Weather Man Meme</div>
+      <p>Load a weather/news meme clip that you have permission to use.</p>
+      <input class="file-input" id="weatherFile" type="file"
+        accept="audio/*">
+      <audio class="audio-player" id="weatherAudio" controls preload="none"></audio>
+      <button class="btn full-width" id="weatherStop" type="button">■ Stop Weather Man audio</button>
+    </div>
+
+    <div class="hint">
+      Tip: select an audio file on your iPhone. The selected file plays in this browser session; it is not uploaded to GitHub.
     </div>
   </section>
 </main>
 
 <footer>
-  VoiceCraft · A simple browser-based speech tool.<br>
-  Voices are supplied by your browser or device.
+  VoiceCraft · Free browser-based voice studio.<br>
+  Available voices depend on your browser and device. Exact Matthew voice, realistic screaming/whispering, and MP3 export may require a separate speech service.
 </footer>
 
 <script>
 (function () {
+  "use strict";
+
   const textBox = document.getElementById("text");
   const voiceSelect = document.getElementById("voice");
-  const styleSelect = document.getElementById("style");
+  const effectSelect = document.getElementById("effect");
   const speed = document.getElementById("speed");
+  const pitch = document.getElementById("pitch");
   const speedValue = document.getElementById("speedValue");
+  const pitchValue = document.getElementById("pitchValue");
   const counter = document.getElementById("counter");
   const status = document.getElementById("status");
   const statusText = document.getElementById("statusText");
   const speakBtn = document.getElementById("speakBtn");
   const pauseBtn = document.getElementById("pauseBtn");
   const resumeBtn = document.getElementById("resumeBtn");
-  const stopBtn = document.getElementById("stopBtn");
   const voiceHint = document.getElementById("voiceHint");
 
   let voices = [];
   let currentUtterance = null;
   let generation = 0;
+  let villagerObjectURL = null;
+  let weatherObjectURL = null;
 
   function setStatus(message, active) {
     statusText.textContent = message;
-    status.classList.toggle("active", !!active);
+    status.classList.toggle("active", Boolean(active));
   }
 
   function updateCounter() {
     counter.textContent = textBox.value.length + " / 5000";
   }
 
+  function updateSliders() {
+    speedValue.textContent = Number(speed.value).toFixed(1) + "×";
+    pitchValue.textContent = Number(pitch.value).toFixed(1);
+  }
+
+  function isEnglish(voice) {
+    return /^en(-|$)/i.test(voice.lang);
+  }
+
   function loadVoices() {
     if (!("speechSynthesis" in window)) {
-      voiceSelect.innerHTML =
-        '<option value="">Speech is not supported</option>';
-      setStatus("Your browser does not support speech synthesis.");
+      voiceSelect.innerHTML = '<option value="">Not supported</option>';
+      voiceHint.textContent = "Speech synthesis is not supported in this browser.";
       speakBtn.disabled = true;
+      setStatus("This browser does not support text-to-speech.", false);
       return;
     }
 
-    const previous = voiceSelect.value;
+    const previousVoice = voices[Number(voiceSelect.value)];
+    const previousKey = previousVoice
+      ? previousVoice.name + "|" + previousVoice.lang
+      : "";
+
     voices = window.speechSynthesis.getVoices();
 
-    voiceSelect.innerHTML = "";
-
     if (!voices.length) {
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent = "Waiting for device voices...";
-      voiceSelect.appendChild(option);
-      voiceHint.textContent =
-        "If this stays empty, try opening the site in Safari again.";
+      voiceSelect.innerHTML = '<option value="">Waiting for voices...</option>';
+      voiceHint.textContent = "Your browser has not provided its voices yet.";
       return;
     }
 
-    voices.sort((a, b) => {
-      const aEnglish = /^en(-|$)/i.test(a.lang) ? 0 : 1;
-      const bEnglish = /^en(-|$)/i.test(b.lang) ? 0 : 1;
+    voices.sort(function (a, b) {
+      const aEnglish = isEnglish(a) ? 0 : 1;
+      const bEnglish = isEnglish(b) ? 0 : 1;
       return aEnglish - bEnglish || a.name.localeCompare(b.name);
     });
 
-    voices.forEach((voice, index) => {
+    voiceSelect.innerHTML = "";
+
+    voices.forEach(function (voice, index) {
       const option = document.createElement("option");
       option.value = String(index);
       option.textContent = voice.name + " (" + voice.lang + ")";
       voiceSelect.appendChild(option);
     });
 
-    const previousIndex = voices.findIndex(
-      voice => voice.name + "|" + voice.lang === previous
-    );
+    const previousIndex = voices.findIndex(function (voice) {
+      return voice.name + "|" + voice.lang === previousKey;
+    });
 
-    // Prefer a natural-sounding English voice when available.
-    let preferred = voices.findIndex(voice =>
-      /^en(-|$)/i.test(voice.lang) &&
-      /natural|enhanced|premium/i.test(voice.name)
-    );
+    // Prefer an exact voice named Matthew if one is available.
+    let preferred = voices.findIndex(function (voice) {
+      return /(^|\s)matthew(\s|$)/i.test(voice.name) && isEnglish(voice);
+    });
 
     if (preferred < 0) {
-      preferred = voices.findIndex(voice =>
-        /^en(-|$)/i.test(voice.lang) &&
-        /male|david|mark|daniel|james|guy/i.test(voice.name)
-      );
+      preferred = voices.findIndex(function (voice) {
+        return isEnglish(voice) &&
+          /natural|enhanced|premium/i.test(voice.name);
+      });
     }
 
-    if (previousIndex >= 0) {
-      voiceSelect.value = String(previousIndex);
-    } else {
-      voiceSelect.value = String(preferred >= 0 ? preferred : 0);
+    if (preferred < 0) {
+      preferred = voices.findIndex(isEnglish);
     }
 
-    voiceHint.textContent =
-      voices.length + " voice(s) available on this device.";
+    voiceSelect.value = String(
+      previousIndex >= 0 ? previousIndex : Math.max(preferred, 0)
+    );
+
+    const hasMatthew = voices.some(function (voice) {
+      return /(^|\s)matthew(\s|$)/i.test(voice.name) && isEnglish(voice);
+    });
+
+    voiceHint.textContent = hasMatthew
+      ? "Matthew voice found on this device."
+      : "Matthew was not found. Choose another available voice, or connect a compatible TTS service for the exact voice.";
   }
 
-  function chosenVoice() {
-    const selected = voices[Number(voiceSelect.value)];
-    return selected || null;
+  function getSelectedVoice() {
+    return voices[Number(voiceSelect.value)] || null;
   }
 
-  function stopSpeech(updateMessage) {
+  function stopSpeech(showMessage) {
     generation++;
-    window.speechSynthesis.cancel();
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
     currentUtterance = null;
     pauseBtn.disabled = true;
     resumeBtn.disabled = true;
-    if (updateMessage) setStatus("Speech stopped.", false);
+    if (showMessage) setStatus("Speech stopped.", false);
   }
 
   function speak() {
@@ -499,31 +665,55 @@ footer {
     }
 
     if (!("speechSynthesis" in window)) {
-      setStatus("Speech synthesis is not supported in this browser.");
+      setStatus("Text-to-speech is not supported in this browser.", false);
       return;
     }
 
     stopSpeech(false);
+
     const myGeneration = generation;
     const utterance = new SpeechSynthesisUtterance(content);
-    const voice = chosenVoice();
+    const selectedVoice = getSelectedVoice();
+    const selectedEffect = effectSelect.value;
 
-    if (voice) {
-      utterance.voice = voice;
-      utterance.lang = voice.lang;
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      utterance.lang = selectedVoice.lang;
     } else {
       utterance.lang = "en-US";
     }
 
-    utterance.rate = Number(speed.value);
+    let rate = Number(speed.value);
+    let voicePitch = Number(pitch.value);
+    let volume = 1;
 
-    if (styleSelect.value === "deep") {
-      utterance.pitch = 0.78;
-    } else if (styleSelect.value === "bright") {
-      utterance.pitch = 1.15;
-    } else {
-      utterance.pitch = 1;
+    switch (selectedEffect) {
+      case "scream":
+        rate = Math.min(2, rate * 1.2);
+        voicePitch = Math.min(2, voicePitch * 1.45);
+        break;
+      case "whisper":
+        rate = Math.min(2, rate * 0.85);
+        voicePitch = Math.max(0.5, voicePitch * 0.9);
+        volume = 0.25;
+        break;
+      case "robot":
+        voicePitch = Math.min(2, voicePitch * 0.7);
+        break;
+      case "deep":
+        voicePitch = Math.max(0.5, voicePitch * 0.6);
+        break;
+      case "fast":
+        rate = 1.7;
+        break;
+      case "slow":
+        rate = 0.65;
+        break;
     }
+
+    utterance.rate = rate;
+    utterance.pitch = voicePitch;
+    utterance.volume = volume;
 
     utterance.onstart = function () {
       if (myGeneration !== generation) return;
@@ -545,9 +735,9 @@ footer {
       currentUtterance = null;
       pauseBtn.disabled = true;
       resumeBtn.disabled = true;
-      if (event.error !== "canceled" &&
-          event.error !== "interrupted") {
-        setStatus("Speech could not play. Try another voice.", false);
+
+      if (event.error !== "canceled" && event.error !== "interrupted") {
+        setStatus("Speech could not play. Try another voice or browser.", false);
       }
     };
 
@@ -556,11 +746,41 @@ footer {
     setStatus("Starting speech...", true);
   }
 
-  textBox.addEventListener("input", updateCounter);
+  function loadLocalAudio(inputId, audioId, type) {
+    const input = document.getElementById(inputId);
+    const audio = document.getElementById(audioId);
 
-  speed.addEventListener("input", function () {
-    speedValue.textContent = Number(speed.value).toFixed(1) + "×";
-  });
+    input.addEventListener("change", function () {
+      const file = input.files && input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("audio/")) {
+        setStatus("Please choose a valid audio file.", false);
+        input.value = "";
+        return;
+      }
+
+      if (type === "villager" && villagerObjectURL) {
+        URL.revokeObjectURL(villagerObjectURL);
+      }
+      if (type === "weather" && weatherObjectURL) {
+        URL.revokeObjectURL(weatherObjectURL);
+      }
+
+      const url = URL.createObjectURL(file);
+      audio.src = url;
+
+      if (type === "villager") villagerObjectURL = url;
+      if (type === "weather") weatherObjectURL = url;
+
+      audio.load();
+      setStatus(file.name + " is ready to play.", false);
+    });
+  }
+
+  textBox.addEventListener("input", updateCounter);
+  speed.addEventListener("input", updateSliders);
+  pitch.addEventListener("input", updateSliders);
 
   speakBtn.addEventListener("click", speak);
 
@@ -583,7 +803,7 @@ footer {
     }
   });
 
-  stopBtn.addEventListener("click", function () {
+  document.getElementById("stopBtn").addEventListener("click", function () {
     stopSpeech(true);
   });
 
@@ -597,19 +817,49 @@ footer {
 
   document.getElementById("exampleBtn").addEventListener("click", function () {
     textBox.value =
-      "Hey everyone! Welcome back. Today, we're testing a text to speech voice. Let's see how it sounds!";
+      "Hey everyone! Welcome back. Today, we're testing some funny voices. Let's see what happens!";
     updateCounter();
     setStatus("Example loaded. Press Speak text to listen.", false);
   });
 
+  document.getElementById("newsBtn").addEventListener("click", function () {
+    stopSpeech(false);
+    textBox.value =
+      "BREAKING NEWS! A massive storm is approaching! " +
+      "Residents are advised to stay alert! " +
+      "More updates are coming soon!";
+    updateCounter();
+    effectSelect.value = "deep";
+    speed.value = "1.1";
+    pitch.value = "0.8";
+    updateSliders();
+    speak();
+  });
+
+  document.getElementById("villagerStop").addEventListener("click", function () {
+    const audio = document.getElementById("villagerAudio");
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  document.getElementById("weatherStop").addEventListener("click", function () {
+    const audio = document.getElementById("weatherAudio");
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  loadLocalAudio("villagerFile", "villagerAudio", "villager");
+  loadLocalAudio("weatherFile", "weatherAudio", "weather");
+
   if ("speechSynthesis" in window) {
     loadVoices();
-    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    window.speechSynthesis.onvoiceschanged = loadVoices;
   } else {
     loadVoices();
   }
 
   updateCounter();
+  updateSliders();
 })();
 </script>
 </body>
